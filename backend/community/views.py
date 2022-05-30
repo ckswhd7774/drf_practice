@@ -32,3 +32,4 @@ class PostUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     serializer_class = CommunityUpdateSerializer
     queryset = Post.objects.all()
     permission_class = [IsAuthenticated, IsAuthorOrReadonly]
+

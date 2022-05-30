@@ -31,8 +31,23 @@ class CommunitySerializer(serializers.ModelSerializer):
 
 
 class CommunityUpdateSerializer(serializers.ModelSerializer):
+    images = PostImageSerializer(source='postimage_posts', many=True)
     writer = serializers.CharField(read_only=True)
 
     class Meta:
         model = Post
-        fields = ['title', 'article', 'music_code', 'writer']
+        fields = ['title', 'article', 'music_code', 'writer', 'images']
+
+    def update(self, instance, validated_data):
+        instance = Post.objects.update(**validated_data)
+        post_images = PostImage.objects.all(post=instance)
+
+        instance.title = validated_data.get('title', instance.title)
+        instance.article = validated_data.get('article', instance.article)
+        instance.music_code = validated_data.get('music_code', instance.music_code)
+        instance.save()
+
+        post_images.image = instance.get('image', PostImage.image)
+        post_images.save()
+
+        return instance
