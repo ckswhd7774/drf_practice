@@ -20,8 +20,6 @@ def get_secret(setting):
 
 
 SECRET_KEY = get_secret("SECRET_KEY")
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-q+i#4vekxl&#a%5nb!=rq2y4s@j-iu38oxt@780bad+$ns=zlo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,12 +53,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    'https://127.0.0.1:8000',
+    'https://localhost:3000',
+]
+
+CORS_ALLOWED_CREDENTIALS = True
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            Path(BASE_DIR, 'frontend', 'build',) # 프론트 경로
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +79,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+    Path(BASE_DIR, 'frontend', 'build', 'static'),
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
