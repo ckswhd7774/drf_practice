@@ -2,10 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from pathlib import Path
 
 
 def main():
+    """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:
         from django.core.management import execute_from_command_line
@@ -15,18 +15,7 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-
-    try:
-        if sys.argv[2] == 'react':
-            project_root = os.getcwd()
-            os.chdir(Path('drf_practice', "frontend"))
-            os.system("npm run build")
-            os.chdir(project_root)
-            sys.argv.pop(2)
-    except IndexError:
-        execute_from_command_line(sys.argv)
-    else:
-        execute_from_command_line(sys.argv)
+    execute_from_command_line(sys.argv)
 
 
 if __name__ == '__main__':
