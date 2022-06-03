@@ -26,6 +26,7 @@ class PostListCreateView(ListCreateAPIView):
     pagination_class = CommunityPagination
     # permission_class = [IsAuthenticated, IsAuthorOrReadonly]
 
+
     def get_queryset(self):
         title = self.request.query_params.get('title')
         article = self.request.query_params.get('article')
