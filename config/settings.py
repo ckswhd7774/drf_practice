@@ -2,30 +2,19 @@ import os, json
 import datetime
 import dj_database_url
 
+from decouple import config
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
+secret_file = os.path.join(BASE_DIR, '.env')  # .env 파일 위치를 명시
 
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-
-def get_secret(setting):
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
-
-
-SECRET_KEY = get_secret("SECRET_KEY")
-
-# DEBUG = True
+SECRET_KEY = config('SECRET_KEY')
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
-
+# cast=bool 이 없으면 False 를 문자열로 인식하게됨.
+# DEBUG = config('DEBUG', default=False, cast=bool)
+# DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
@@ -133,6 +122,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_ROOT = Path(BASE_DIR, 'static')
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR, 'media')
