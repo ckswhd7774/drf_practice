@@ -7,3 +7,4 @@ urlpatterns = [
     path('community/', include('community.urls')),
     # re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
+
