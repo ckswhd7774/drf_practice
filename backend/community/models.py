@@ -1,5 +1,4 @@
 from operator import mod
-from tkinter.tix import Balloon
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _

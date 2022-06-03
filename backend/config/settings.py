@@ -23,7 +23,8 @@ def get_secret(setting):
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = True
+# DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['*']
 
