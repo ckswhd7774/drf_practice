@@ -29,12 +29,12 @@ class PostListCreateView(ListCreateAPIView):
 
     def get_queryset(self):
         filter_type = self.request.query_params.get('filterType')
-
+        search = self.request.query_params.get('search')
         if filter_type == 'title':
-            queryset = Post.objects.filter(title__icontains=filter_type)
+            queryset = Post.objects.filter(title__icontains=search)
             return queryset
         if filter_type == 'article':
-            queryset = Post.objects.filter(article__icontains=filter_type)
+            queryset = Post.objects.filter(article__icontains=search)
             return queryset
 
         return Post.objects.all()
