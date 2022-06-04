@@ -12,13 +12,12 @@ class PostImageSerializer(serializers.ModelSerializer):
         fields = ['image']
 
 
-
 class CommunitySerializer(serializers.ModelSerializer):
     images = PostImageSerializer(source='postimage_posts', many=True, allow_null=True)
 
     class Meta:
         model = Post
-        fields = ['title', 'article', 'music_code', 'category', 'id', 'created', 'images']
+        fields = ['title', 'article', 'music_code', 'category', 'id', 'created']
 
     def create(self, validated_data):
         instance = Post.objects.create(**validated_data)
