@@ -17,7 +17,7 @@ class CommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'article', 'music_code', 'images']
+        fields = ['title', 'article', 'music_code', 'images', 'category']
 
     def create(self, validated_data):
         instance = Post.objects.create(**validated_data)
@@ -33,7 +33,7 @@ class CommunityUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'article', 'music_code', 'writer', 'images']
+        fields = ['title', 'article', 'music_code', 'writer', 'images', 'category']
 
     def update(self, instance, validated_data):
         instance = Post.objects.update(**validated_data)
