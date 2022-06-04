@@ -13,7 +13,7 @@ class PostImageSerializer(serializers.ModelSerializer):
 
 
 class CommunitySerializer(serializers.ModelSerializer):
-    images = PostImageSerializer(source='postimage_posts', many=True)
+    images = PostImageSerializer(source='postimage_posts', many=True, allow_null=True)
 
     class Meta:
         model = Post
