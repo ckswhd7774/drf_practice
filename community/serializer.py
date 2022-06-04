@@ -12,6 +12,7 @@ class PostImageSerializer(serializers.ModelSerializer):
         fields = ['image']
 
 
+
 class CommunitySerializer(serializers.ModelSerializer):
     images = PostImageSerializer(source='postimage_posts', many=True, allow_null=True)
 
