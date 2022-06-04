@@ -15,32 +15,29 @@ class PostListCreateView(ListCreateAPIView):
     """
     게시글 리스트 조회, 게시글 생성
     ---
-    url 예) 127.0.0.1:8000/community/?search=제목&music_code=C
+    url 예) 127.0.0.1:8000/community/?search=제목&music_code=C&category=발라드
     """
     serializer_class = CommunitySerializer
     # queryset = Post.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     # filter_class = CommunityFilter
-    filterset_fields = ['music_code']
+    filterset_fields = ['music_code', 'category']
     search_fields = ['title', 'article']
     pagination_class = CommunityPagination
+
     # permission_class = [IsAuthenticated, IsAuthorOrReadonly]
 
-
     def get_queryset(self):
-        title = self.request.query_params.get('title')
-        article = self.request.query_params.get('article')
+        filter_type = self.request.query_params.get('filterType')
 
-        if title:
-            queryset = Post.objects.filter(title__icontains=title)
+        if filter_type == 'title':
+            queryset = Post.objects.filter(title__icontains=filter_type)
             return queryset
-        if article:
-            queryset = Post.objects.filter(article__icontains=article)
+        if filter_type == 'article':
+            queryset = Post.objects.filter(article__icontains=filter_type)
             return queryset
 
         return Post.objects.all()
-
-
 
 
 class PostUpdateDeleteView(RetrieveUpdateDestroyAPIView):

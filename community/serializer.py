@@ -19,9 +19,6 @@ class CommunitySerializer(serializers.ModelSerializer):
         model = Post
         fields = ['title', 'article', 'music_code', 'images']
 
-    def get_user_email(self, obj):
-        return obj.writer.email
-
     def create(self, validated_data):
         instance = Post.objects.create(**validated_data)
         image_set = self.context['request'].FILES
