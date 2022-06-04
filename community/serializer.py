@@ -17,7 +17,7 @@ class CommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'article', 'music_code', 'category', 'id', 'created']
+        fields = ['title', 'article', 'music_code', 'category', 'id', 'created', 'images']
 
     def create(self, validated_data):
         instance = Post.objects.create(**validated_data)
