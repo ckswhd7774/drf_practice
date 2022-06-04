@@ -13,16 +13,16 @@ class PostImageSerializer(serializers.ModelSerializer):
 
 
 class CommunitySerializer(serializers.ModelSerializer):
-    images = PostImageSerializer(source='postimage_posts', many=True, allow_null=True)
+    # images = PostImageSerializer(source='postimage_posts', many=True, allow_null=True)
 
     class Meta:
         model = Post
-        fields = ['title', 'article', 'music_code', 'images', 'category']
+        fields = ['title', 'article', 'music_code', 'category']
 
     def create(self, validated_data):
         instance = Post.objects.create(**validated_data)
         image_set = self.context['request'].FILES
-        for image_data in image_set.getlist('image'):
+        for image_data in image_set.getlist('images'):
             PostImage.objects.create(post=instance, image=image_data)
         return instance
 
