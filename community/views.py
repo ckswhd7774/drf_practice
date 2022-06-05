@@ -18,13 +18,10 @@ class PostListCreateView(ListCreateAPIView):
     url 예) 127.0.0.1:8000/community/?search=제목&music_code=C&category=발라드
     """
     serializer_class = CommunitySerializer
-    # queryset = Post.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    # filter_class = CommunityFilter
     filterset_fields = ['music_code', 'category']
     search_fields = ['title', 'article']
     pagination_class = CommunityPagination
-
     # permission_class = [IsAuthenticated, IsAuthorOrReadonly]
 
     def get_queryset(self):
@@ -37,7 +34,7 @@ class PostListCreateView(ListCreateAPIView):
             queryset = Post.objects.filter(article__icontains=search)
             return queryset
 
-        return Post.objects.all()
+        return Post.objects.all().order_by('-created')
 
 
 class PostUpdateDeleteView(RetrieveUpdateDestroyAPIView):
